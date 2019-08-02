@@ -117,7 +117,7 @@ int sd_save_to_file(void *buf, u32 size, const char *filename)
 #define IRAM_PAYLOAD_MAX_SIZE 0x2F000
 #define IRAM_PAYLOAD_BASE 0x40010000
 
-#define LOG_PAYLOAD_MAX_SIZE 0xA500
+#define LOG_PAYLOAD_MAX_SIZE 0x9900
 #define LOG_START (IRAM_PAYLOAD_BASE + LOG_PAYLOAD_MAX_SIZE)
 
 #define IPL_STACK_TOP  0x4003F000
