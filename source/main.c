@@ -114,11 +114,12 @@ int sd_save_to_file(void *buf, u32 size, const char *filename)
     return 0;
 }
 
-#define IRAM_PAYLOAD_MAX_SIZE 0x2F000
-#define IRAM_PAYLOAD_BASE 0x40010000
+#define IRAM_BASE 0x40000000
+#define IRAM_SIZE 0x40000
 
-#define LOG_PAYLOAD_MAX_SIZE 0x9900
-#define LOG_START (IRAM_PAYLOAD_BASE + LOG_PAYLOAD_MAX_SIZE)
+#define IRAM_SAFE_START 0x40038000ull
+#define IRAM_SAFE_END 0x4003D000ull
+#define IRAM_SAFE_SIZE IRAM_SAFE_END - IRAM_SAFE_START
 
 #define IPL_STACK_TOP  0x4003F000
 #define IPL_HEAP_START 0x90020000
@@ -132,6 +133,7 @@ void ipl_main()
     heap_init(IPL_HEAP_START);
     sd_mount();
 
-    sd_save_to_file((void*)LOG_START, IRAM_PAYLOAD_MAX_SIZE-LOG_PAYLOAD_MAX_SIZE, "iram.log");
+    sd_save_to_file((void*)IRAM_BASE, IRAM_SIZE, "iram.bin");
+    sd_save_to_file((void*)IRAM_SAFE_START, IRAM_SAFE_SIZE, "iram.log");
     reboot_rcm();
 }
